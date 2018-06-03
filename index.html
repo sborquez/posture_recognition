@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<!--
+	Astral by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Posture Recognition</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Wrapper-->
+			<div id="wrapper">
+
+				<!-- Nav -->
+					<nav id="nav">
+						<a href="#game" class="icon fa-gamepad active"><span>Game</span></a>
+						<a href="#work" class="icon fa-camera-retro"><span>WebCam</span></a>
+						<a href="#contact" class="icon fa-info"><span>Info</span></a>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Game -->
+							<article id="game" class="panel">
+								<header>
+									<h1>Juega con ...</h1>
+									<p>Tensorflow y reconocimiento de postura</p>
+								</header>
+								<div id="Image" style="display:none"></div>
+								<div id="Canvas"></div>
+							</article>
+							
+							<!-- Work -->
+							<article id="work" class="panel">
+								<header>
+									<h2>Camara</h2>
+								</header>
+								<div id="Camera"></div>
+							</article>
+							
+							<!-- Contact -->
+							<article id="contact" class="panel">
+								<header>
+									<h2>Mas informacion</h2>
+								</header>
+								<p>info</p>
+								<a href="https://sborquez.github.io">aqui</a>
+							</article>
+
+					</div>
+
+				<!-- Footer -->
+					<div id="footer">
+						<a href="https://labcomp.cl/~sborquez">The Wired</a>
+						<ul class="copyright">
+							<li>&copy; <a href="https://github.com/sborquez">sborquez</a></li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						</ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/skel-viewport.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+
+		<!-- Demo scripts -->
+ 			<script src="p5.min.js"></script>
+			<script src="webcam.min.js"></script>
+			<script src="https://unpkg.com/@tensorflow/tfjs"></script>
+			<script src="https://unpkg.com/@tensorflow-models/posenet"></script>
+			<script src="pet.js"></script>
+			<script src="sketch.js"></script>
+	</body>
+</html>
