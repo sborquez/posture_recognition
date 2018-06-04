@@ -1,5 +1,4 @@
 function Pet(name) {
-    this.name = name;
     this.face = {
         scale : 1,
         pan : "center",
@@ -70,11 +69,26 @@ function Pet(name) {
         "leftAnkle": {
             "x" : 0, "y": 0
         }
-    }
 
-    this.load = function(stripes_path) {
 
     }
+    
+    
+    this.load = function(name="test") {
+        this.name = name;
+        if (name === "test") {
+            this.sprites = {}
+        } else {
+            this.sprites = {
+                body1 : loadImage("https://raw.githubusercontent.com/sborquez/HomePage/master/assets/sprites/groot/body1.png"),
+                body2 : loadImage("https://raw.githubusercontent.com/sborquez/HomePage/master/assets/sprites/groot/body2.png"),
+                front_face : loadImage("https://raw.githubusercontent.com/sborquez/HomePage/master/assets/sprites/groot/front_face.png")
+            }
+        }
+    }
+
+    this.load(name);
+
 
     this.update = function(pose, smooth=true) {
        
@@ -83,7 +97,7 @@ function Pet(name) {
                 if (keypoint.score >= 0.1) {
                     if (smooth) {
                         var diff = dist(keypoint.position.x, keypoint.position.y,this.parts[keypoint.part].x, this.parts[keypoint.part].y);
-                        this.parts[keypoint.part] = diff < 1 ? this.parts[keypoint.part] : { x:keypoint.position.x, y:keypoint.position.y};
+                        this.parts[keypoint.part] = abs(diff) < 1.5 ? this.parts[keypoint.part] : { x:keypoint.position.x, y:keypoint.position.y};
                     }
                 }
                 //else dont update
@@ -137,10 +151,10 @@ function Pet(name) {
 
         switch (this.face.tilt) {
             case "up":
-            this.face.height = 1.618*this.face.scale*0.6;                 
+            this.face.height = 1.618*this.face.scale*0.7;                 
                 break;
             case "down":
-                this.face.height = 1.618*this.face.scale*0.6;            
+                this.face.height = 1.618*this.face.scale*0.7;            
                 break;
             case "center":
             default:
@@ -150,18 +164,48 @@ function Pet(name) {
         // body data
         this.body.scale = dist(this.parts.leftShoulder.x, this.parts.leftShoulder.y,this.parts.rightShoulder.x, this.parts.rightShoulder.y );
     
-       console.log(this.face);
-       console.log(this.body);
-       console.log(this.parts);
     }
-
+    
     this.draw = function() {
+        var center_eyes = {
+            x:(this.parts.leftEye.x + this.parts.rightEye.x)/2, 
+            y:(this.parts.leftEye.y + this.parts.rightEye.y)/2
+        };
 
+        // HEAD
+        translate(center_eyes.x, this.parts.nose.y);
+        rotate(this.face.angle);
+        image(this.sprites.front_face, -this.face.width/2, -4*this.face.height/5, this.face.width, this.face.height);
+        rotate(0);
+        translate(-center_eyes.x, -this.parts.nose.y); 
+        
+        // EYES
+        ellipse(this.parts.leftEye.x, this.parts.leftEye.y, this.face.scale * (1/5) * (1/3)); 
+
+        ellipse(this.parts.rightEye.x, this.parts.rightEye.y, this.face.scale * (1/5)* (1/3));    
+        
+
+        // ARMS
+        ellipse(this.parts.leftElbow.x, this.parts.leftElbow.y, this.body.scale * (1/10));
+        ellipse(this.parts.rightElbow.x, this.parts.rightElbow.y, this.body.scale * (1/10));
+        ellipse(this.parts.leftHip.x, this.parts.leftHip.y, this.body.scale * (1/10));
+        ellipse(this.parts.rightHip.x, this.parts.rightHip.y, this.body.scale * (1/10));
+        ellipse(this.parts.leftShoulder.x, this.parts.leftShoulder.y, this.body.scale * (1/10));
+        
+
+        ellipse(this.parts.leftAnkle.x, this.parts.leftAnkle.y, this.body.scale * (1/10));
+        ellipse(this.parts.rightAnkle.x, this.parts.rightAnkle.y, this.body.scale * (1/10));
+        ellipse(this.parts.rightKnee.x, this.parts.rightKnee.y, this.body.scale * (1/10));
+        ellipse(this.parts.leftKnee.x, this.parts.leftKnee.y, this.body.scale * (1/10));
+        ellipse(this.parts.leftWrist.x, this.parts.leftWrist.y, this.body.scale * (1/10));
+        
     }
-
+    
     this.draw_dots = function() {
-        background(230);
-
+        console.log(this.face);
+        console.log(this.body);
+        console.log(this.parts);
+        
         var center_head = {
             x:(this.parts.leftEar.x + this.parts.rightEar.x)/2, 
             y:(this.parts.leftEar.y + this.parts.rightEar.y)/2
@@ -201,16 +245,16 @@ function Pet(name) {
         ellipse(this.parts.nose.x, this.parts.nose.y, this.face.scale * (1/5) * (1/3));
 
         // BODY
-        //ellipse(this.parts.leftAnkle.x, this.parts.leftAnkle.y, this.body.scale * (1/10));
-        // ellipse(this.parts.rightAnkle.x, this.parts.rightAnkle.y, this.body.scale * (1/10));
-        // ellipse(this.parts.leftElbow.x, this.parts.leftElbow.y, this.body.scale * (1/10));
-        // ellipse(this.parts.rightElbow.x, this.parts.rightElbow.y, this.body.scale * (1/10));
-        // ellipse(this.parts.leftHip.x, this.parts.leftHip.y, this.body.scale * (1/10));
-        // ellipse(this.parts.rightHip.x, this.parts.rightHip.y, this.body.scale * (1/10));
-        // ellipse(this.parts.leftKnee.x, this.parts.leftKnee.y, this.body.scale * (1/10));
-        // ellipse(this.parts.rightKnee.x, this.parts.rightKnee.y, this.body.scale * (1/10));
+        ellipse(this.parts.leftElbow.x, this.parts.leftElbow.y, this.body.scale * (1/10));
+        ellipse(this.parts.rightElbow.x, this.parts.rightElbow.y, this.body.scale * (1/10));
+        ellipse(this.parts.leftHip.x, this.parts.leftHip.y, this.body.scale * (1/10));
+        ellipse(this.parts.rightHip.x, this.parts.rightHip.y, this.body.scale * (1/10));
         ellipse(this.parts.leftShoulder.x, this.parts.leftShoulder.y, this.body.scale * (1/10));
         ellipse(this.parts.rightShoulder.x, this.parts.rightShoulder.y, this.body.scale * (1/10));
+        //ellipse(this.parts.leftAnkle.x, this.parts.leftAnkle.y, this.body.scale * (1/10));
+        // ellipse(this.parts.rightAnkle.x, this.parts.rightAnkle.y, this.body.scale * (1/10));
+        // ellipse(this.parts.rightKnee.x, this.parts.rightKnee.y, this.body.scale * (1/10));
+        // ellipse(this.parts.leftKnee.x, this.parts.leftKnee.y, this.body.scale * (1/10));
         // ellipse(this.parts.leftWrist.x, this.parts.leftWrist.y, this.body.scale * (1/10));
         // ellipse(this.parts.rightWrist.x, this.parts.rightWrist.y, this.body.scale * (1/10));
     }

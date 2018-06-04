@@ -3,9 +3,10 @@ var imageScaleFactor = 0.5;
 var outpuStride = 16;
 var flipHorizontal = false;
 const net = posenet.load(); 
-const pet = new Pet("test");
+const pet = new Pet();
 var img;
 //var img = loadImage('assets/laDefense.jpg');
+var backgroundImage;
 
 function setup() {
     Webcam.set({
@@ -19,7 +20,9 @@ function setup() {
     var canvas = createCanvas(320, 240);
     canvas.parent("Canvas");
     background(51);    
-    frameRate(15);
+    frameRate(30);
+    backgroundImage = loadImage("https://i.ebayimg.com/images/g/HnYAAOSwR29ZDtso/s-l300.jpg");
+    pet.load("groot");
 }
 
 function draw() {
@@ -42,8 +45,14 @@ function draw() {
             )
         } );
 
+        background(230);
+       
         //draw order
-        pet.draw_dots();
+        if (pet.name==="test") {
+            pet.draw_dots();
+        } else {
+            pet.draw();
+        }
 
     } catch (error) {
         console.log(error);
